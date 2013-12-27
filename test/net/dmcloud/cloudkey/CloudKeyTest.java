@@ -94,8 +94,7 @@ public class CloudKeyTest {
         }
     }
 
-
- /**
+    /**
      * Test of fileUpload method, of class CloudKey.
      */
     @Test
@@ -110,5 +109,4 @@ public class CloudKeyTest {
             e.printStackTrace();
         }
     }
-
 }

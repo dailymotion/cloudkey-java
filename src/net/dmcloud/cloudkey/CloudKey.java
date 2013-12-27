@@ -17,7 +17,7 @@ public class CloudKey extends Api {
     public CloudKey(String _user_id, String _api_key) {
         super(_user_id, _api_key, CloudKey.API_URL, CloudKey.CDN_URL, "", -1);
     }
-    
+
     public CloudKey(String _user_id, String _api_key, String httpProxyHost, int httpProxyPort) {
         super(_user_id, _api_key, CloudKey.API_URL, CloudKey.CDN_URL, httpProxyHost, httpProxyPort);
     }
@@ -100,7 +100,7 @@ public class CloudKey extends Api {
             };
 
             filePost.setRequestEntity(new MultipartRequestEntity(parts, filePost.getParams()));
-            
+
             HttpClient client = new HttpClient();
             if (httpProxyHost != null && !httpProxyHost.isEmpty() && httpProxyPort > 0) {
                 HostConfiguration config = client.getHostConfiguration();

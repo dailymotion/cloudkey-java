@@ -7,14 +7,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.zip.Deflater;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.httpclient.HttpHost;
 
 public class Helpers {
 
     public static String curl(String targetURL, String urlParameters) {
         return curl(targetURL, urlParameters, null, -1);
     }
-    
+
     public static String curl(String targetURL, String urlParameters, String httpProxyHost, int httpProxyPort) {
         URL url;
         HttpURLConnection connection = null;

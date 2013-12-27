@@ -25,6 +25,7 @@ public class Api {
     protected String api_key = null;
     protected String base_url = null;
     protected String cdn_url = null;
+    
     protected String httpProxyHost = null;
     protected int httpProxyPort = -1;
 
