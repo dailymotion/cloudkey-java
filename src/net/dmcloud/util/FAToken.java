@@ -1,28 +1,25 @@
 package net.dmcloud.util;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Date;
-import java.io.IOException;
-import java.security.SecureRandom;
 import java.math.BigInteger;
-import net.dmcloud.util.DCObject;
+import java.security.SecureRandom;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import net.dmcloud.cloudkey.Helpers;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.apache.commons.codec.binary.Base64;
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class FAToken {
 
-    private String user_id  = null;
+    private String user_id = null;
     private String media_id = null;
     private String api_key = null;
     private String nonce = null;
-    private HashMap<String,String> rights = null;
-    private HashMap<String,String> meta = null;
+    private HashMap<String, String> rights = null;
+    private HashMap<String, String> meta = null;
     private String callback_url = null;
     private Integer expires = 0;
     private Integer maxReplay = 0;
-
     public static int DEFAULT_TIMEOUT = 600;
 
     public FAToken(String token, String api_key) throws Exception {
@@ -30,8 +27,8 @@ public class FAToken {
     }
 
     public FAToken(String token, String api_key, Boolean check_auth) throws Exception {
-		ObjectMapper mapper;
-		DCObject token_info;
+        ObjectMapper mapper;
+        DCObject token_info;
         String auth;
 
         this.api_key = api_key;
@@ -52,14 +49,14 @@ public class FAToken {
             nonce = token_info.get("nonce").toString();
         }
         if (token_info.containsKey("rights")) {
-            rights = (HashMap<String,String>)token_info.get("rights");
+            rights = (HashMap<String, String>) token_info.get("rights");
         } else {
-            rights = new HashMap<String,String>();
+            rights = new HashMap<String, String>();
         }
         if (token_info.containsKey("meta")) {
-            meta = (HashMap<String,String>)token_info.get("meta");
+            meta = (HashMap<String, String>) token_info.get("meta");
         } else {
-            meta = new HashMap<String,String>();
+            meta = new HashMap<String, String>();
         }
         if (token_info.containsKey("callback_url")) {
             callback_url = token_info.get("callback_url").toString();
@@ -76,15 +73,15 @@ public class FAToken {
     }
 
     public FAToken(String user_id, String media_id, String api_key) {
-        this(user_id, media_id, api_key, (int)(new Date().getTime() / 1000) + DEFAULT_TIMEOUT);
+        this(user_id, media_id, api_key, (int) (new Date().getTime() / 1000) + DEFAULT_TIMEOUT);
     }
 
     public FAToken(String user_id, String media_id, String api_key, Integer expires) {
         this.user_id = user_id;
         this.media_id = media_id;
         this.api_key = api_key;
-        this.rights = new HashMap<String,String>();
-        this.meta = new HashMap<String,String>();
+        this.rights = new HashMap<String, String>();
+        this.meta = new HashMap<String, String>();
         this.expires = expires;
     }
 
@@ -121,7 +118,7 @@ public class FAToken {
         rights.put(name, value);
     }
 
-    public HashMap<String,String> getRights() {
+    public HashMap<String, String> getRights() {
         return rights;
     }
 
@@ -129,7 +126,7 @@ public class FAToken {
         meta.put(name, value);
     }
 
-    public HashMap<String,String> getMeta() {
+    public HashMap<String, String> getMeta() {
         return meta;
     }
 
@@ -159,16 +156,16 @@ public class FAToken {
     }
 
     public String toJSON() throws Exception {
-		ObjectMapper mapper;
+        ObjectMapper mapper;
         DCObject token_info;
         if (nonce == null) {
             genNonce();
         }
-		token_info = DCObject.create()
-            .push("user_id", user_id)
-            .push("media_id", media_id)
-            .push("expires", expires)
-            .push("nonce", nonce);
+        token_info = DCObject.create()
+                .push("user_id", user_id)
+                .push("media_id", media_id)
+                .push("expires", expires)
+                .push("nonce", nonce);
         if (maxReplay > 0) {
             token_info.push("max_replay", maxReplay);
         }
@@ -182,12 +179,11 @@ public class FAToken {
             token_info.push("meta", meta);
         }
         mapper = new ObjectMapper();
-		token_info.push("auth", getAuth(token_info));
+        token_info.push("auth", getAuth(token_info));
         return mapper.writeValueAsString(token_info);
     }
 
     public String toBase64() throws Exception {
         return Base64.encodeBase64URLSafeString(toJSON().getBytes());
-   }
-
+    }
 }
