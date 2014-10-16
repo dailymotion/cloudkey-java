@@ -2,6 +2,7 @@ package net.dmcloud.cloudkey;
 
 import java.io.*;
 import java.net.*;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -196,7 +197,7 @@ public class Helpers {
     }
 
     public static String md5(String password) {
-        byte[] uniqueKey = password.getBytes();
+        byte[] uniqueKey = password.getBytes(Charset.forName("UTF-8"));
         byte[] hash = null;
 
         try {
